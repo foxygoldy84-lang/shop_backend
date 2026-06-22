@@ -36,3 +36,4 @@ poetry run poe fix
 ```bash
 poetry run python main.py
 ```
+<!-- Проект готов к проверке -->
