@@ -27,12 +27,17 @@ dev = [
 
 [tool.poe.tasks.fix]
 sequence = [
-    { cmd = "isort src/ tests/" },
-    { cmd = "black src/ tests/" },
-    { cmd = "flake8 src/ tests/" },
-    { cmd = "mypy src/ tests/" },
+    { cmd = "isort ." },
+    { cmd = "black ." },
+    { cmd = "flake8 ." },
+    { cmd = "mypy ." },
     { cmd = "pytest" }
 ]
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
+addopts = "--cov=src --cov-report=term-missing --cov-report=html"
+
 
 
 [tool.black]
@@ -54,8 +59,3 @@ explicit_package_bases = true
 max-line-length = 120
 extend-ignore = "E203"
 exclude = ".git,__pycache__,docs,old,build,dist,.venv"
-
-[tool.pytest.ini_options]
-pythonpath = ["."]
-addopts = "--cov=src --cov-report=term-missing"
-
