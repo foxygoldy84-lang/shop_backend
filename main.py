@@ -55,9 +55,9 @@ if __name__ == "__main__":
     # Загружаем данные из файла
     loaded_categories = load_data_from_json("products.json")
 
-    # Выводим информацию, чтобы убедиться, что словари стали объектами классов
+    # Выводим информацию, так как теперь это список строк
     for category in loaded_categories:
         print(f"Категория: {category.name} ({category.description})")
         print("Товары:")
-        for product in category.products:
-            print(f"  - {product.name}: {product.price} руб. ({product.quantity} шт.)")
+        for product_str in category.products:
+            print(f"  - {product_str}")
