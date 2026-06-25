@@ -30,9 +30,17 @@ if __name__ == "__main__":
 
     print(category1.name == "Смартфоны")
     print(category1.description)
-    print(len(category1.products))
     print(category1.category_count)
     print(category1.product_count)
+    # === Проверка магических методов (__str__ и __add__) ===
+    print(str(product1))
+    print(str(product2))
+    print(str(product3))
+    print(str(category1))
+
+    print(product1 + product2)
+    print(product1 + product3)
+    print(product2 + product3)
 
     product4 = Product('55" QLED 4K', "Фоновая подсветка", 123000.0, 7)
     category2 = Category(
@@ -49,15 +57,10 @@ if __name__ == "__main__":
     print(Category.category_count)
     print(Category.product_count)
 
-    # === ПРОВЕРКА ДОПОЛНИТЕЛЬНОГО ЗАДАНИЯ ===
+    # === Проверка загрузки данных из JSON ===
     print("\n--- Проверка загрузки данных из JSON ---")
-
-    # Загружаем данные из файла
     loaded_categories = load_data_from_json("products.json")
-
-    # Выводим информацию, так как теперь это список строк
     for category in loaded_categories:
         print(f"Категория: {category.name} ({category.description})")
         print("Товары:")
-        for product_str in category.products:
-            print(f"  - {product_str}")
+        print(category.products)

@@ -10,6 +10,14 @@ class Product:
         self.__price: float = price
         self.quantity: int = quantity
 
+    def __str__(self) -> str:
+        """[Задание 1] Магический метод для строкового отображения продукта."""
+        return f"{self.name}, {self.price} руб. Остаток: {self.quantity} шт."
+
+    def __add__(self, other: "Product") -> float:
+        """[Задание 2] Магический метод для сложения полной стоимости двух товаров на складе."""
+        return (self.price * self.quantity) + (other.price * other.quantity)
+
     @classmethod
     def new_product(
         cls, data: Dict[str, Union[str, float, int]], products_list: Optional[List["Product"]] = None

@@ -16,6 +16,13 @@ class Category:
         Category.category_count += 1
         Category.product_count += len(products)
 
+    def __str__(self) -> str:
+        """[Задание 1, продолжение] Магический метод для строкового отображения категории."""
+        total_quantity = 0
+        for product in self.__products:
+            total_quantity += product.quantity
+        return f"{self.name}, количество продуктов: {total_quantity} шт."
+
     def add_product(self, product: Product) -> None:
         """[Задание 1] Метод для добавления объекта класса Product в приватный список товаров."""
         self.__products.append(product)
@@ -26,5 +33,5 @@ class Category:
         """[Задание 2] Геттер, который возвращает все товары в виде одной большой строки."""
         result = ""
         for product in self.__products:
-            result += f"{product.name}, {product.price} руб. Остаток: {product.quantity} шт.\n"
+            result += f"{str(product)}\n"
         return result

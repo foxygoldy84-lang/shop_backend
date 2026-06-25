@@ -3,6 +3,7 @@ from typing import List
 import pytest
 
 from src.category import Category
+from src.category_iterator import CategoryIterator
 from src.product import Product
 
 
@@ -24,3 +25,23 @@ def test_category_init(sample_products: List[Product]) -> None:
     # Проверяем работу строкового геттера продуктов (Задание 2)
     expected_string = "Iphone 15, 210000.0 руб. Остаток: 8 шт.\n" "Xiaomi Redmi Note 11, 31000.0 руб. Остаток: 14 шт.\n"
     assert category.products == expected_string
+
+
+def test_category_str(sample_products: List[Product]) -> None:
+    """Тест магического метода __str__ для категории."""
+    category = Category("Смартфоны", "Телефоны", sample_products)
+    # Проверяем суммирование остатков на складе: 8 + 14 = 22
+    assert str(category) == "Смартфоны, количество продуктов: 22 шт."
+
+
+def test_category_iterator(sample_products: List[Product]) -> None:
+    """Тест класса-итератора для перебора товаров категории в цикле for."""
+    category = Category("Смартфоны", "Телефоны", sample_products)
+    iterator = CategoryIterator(category)
+
+    # Собираем элементы итератора обратно в список
+    iterated_products = list(iterator)
+
+    assert len(iterated_products) == 2
+    assert iterated_products[0].name == "Iphone 15"
+    assert iterated_products[1].name == "Xiaomi Redmi Note 11"

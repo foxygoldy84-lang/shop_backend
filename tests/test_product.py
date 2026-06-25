@@ -68,3 +68,15 @@ def test_new_product_merge_duplicate(sample_product: Product) -> None:
 
     assert merged_product.quantity == 10
     assert merged_product.price == 230000.0
+
+
+def test_product_str(sample_product: Product) -> None:
+    """Тест магического метода __str__ для продукта."""
+    assert str(sample_product) == "Iphone 15, 210000.0 руб. Остаток: 8 шт."
+
+
+def test_product_add(sample_product: Product) -> None:
+    """Тест магического метода __add__ для сложения полной стоимости двух товаров."""
+    other_product = Product("Xiaomi Redmi Note 11", "1024GB", 31000.0, 14)
+    # Вычисление: (210000 * 8) + (31000 * 14) = 1680000 + 434000 = 2114000
+    assert sample_product + other_product == 2114000.0
