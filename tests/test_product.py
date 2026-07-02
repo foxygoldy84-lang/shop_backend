@@ -2,7 +2,9 @@ from typing import Any, Dict
 
 import pytest
 
+from src.lawn_grass import LawnGrass
 from src.product import Product
+from src.smartphone import Smartphone
 
 
 @pytest.fixture
@@ -80,3 +82,30 @@ def test_product_add(sample_product: Product) -> None:
     other_product = Product("Xiaomi Redmi Note 11", "1024GB", 31000.0, 14)
     # Вычисление: (210000 * 8) + (31000 * 14) = 1680000 + 434000 = 2114000
     assert sample_product + other_product == 2114000.0
+
+
+def test_smartphone_init() -> None:
+    """Тест инициализации смартфона и его уникальных свойств."""
+    phone = Smartphone("iPhone 15", "Gray", 210000.0, 8, 3.5, "Pro", 512, "Titanium")
+    assert phone.name == "iPhone 15"
+    assert phone.efficiency == 3.5
+    assert phone.model == "Pro"
+    assert phone.memory == 512
+    assert phone.color == "Titanium"
+
+
+def test_lawn_grass_init() -> None:
+    """Тест инициализации газонной травы и её уникальных свойств."""
+    grass = LawnGrass("Трава", "Зеленая", 500.0, 10, "Россия", 14, "Светло-зеленый")
+    assert grass.name == "Трава"
+    assert grass.country == "Россия"
+    assert grass.germination_period == 14
+    assert grass.color == "Светло-зеленый"
+
+
+def test_add_products_type_error(sample_product: Product) -> None:
+    """Тест, что сложение разных классов вызывает TypeError (Задание 2)."""
+    phone = Smartphone("iPhone 15", "Gray", 210000.0, 8, 3.5, "Pro", 512, "Titanium")
+
+    with pytest.raises(TypeError):
+        _ = sample_product + phone

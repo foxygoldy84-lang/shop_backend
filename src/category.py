@@ -24,7 +24,11 @@ class Category:
         return f"{self.name}, количество продуктов: {total_quantity} шт."
 
     def add_product(self, product: Product) -> None:
-        """[Задание 1] Метод для добавления объекта класса Product в приватный список товаров."""
+        """[Задание 3] Метод для добавления объекта класса Product (или его наследников) в категорию."""
+        # Проверяем, является ли объект экземпляром класса Product или его дочерних классов
+        if not isinstance(product, Product):
+            raise TypeError("Добавлять в категорию можно только продукты или их наследников")
+
         self.__products.append(product)
         Category.product_count += 1
 

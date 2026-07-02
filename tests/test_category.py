@@ -45,3 +45,11 @@ def test_category_iterator(sample_products: List[Product]) -> None:
     assert len(iterated_products) == 2
     assert iterated_products[0].name == "Iphone 15"
     assert iterated_products[1].name == "Xiaomi Redmi Note 11"
+
+
+def test_category_add_product_invalid() -> None:
+    """Тест, что добавление чужого объекта вызывает TypeError (Задание 3)."""
+    category = Category("Смартфоны", "Телефоны", [])
+
+    with pytest.raises(TypeError):
+        category.add_product("Не продукт, а просто строка")  # type: ignore
