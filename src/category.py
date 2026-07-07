@@ -1,9 +1,10 @@
 from typing import List
 
+from src.order import BaseGroup
 from src.product import Product
 
 
-class Category:
+class Category(BaseGroup):
     category_count: int = 0
     product_count: int = 0
 

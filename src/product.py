@@ -1,7 +1,23 @@
-from typing import Dict, List, Optional, Union
+from abc import ABC, abstractmethod
+from typing import Any, Dict, List, Optional, Union
+
+from src.print_mixin import PrintMixin
 
 
-class Product:
+class BaseProduct(ABC):
+    """Абстрактный базовый класс для всех продуктов."""
+
+    @classmethod
+    @abstractmethod
+    def new_product(
+        cls, data: Dict[str, Union[str, float, int]], products_list: Optional[List[Any]] = None
+    ) -> "BaseProduct":
+        """Абстрактный фабричный метод для создания продукта."""
+        pass
+
+
+class Product(PrintMixin, BaseProduct):
+    """Базовый класс продукта, включающий логирование через миксин."""
 
     def __init__(self, name: str, description: str, price: float, quantity: int) -> None:
         self.name: str = name
@@ -9,6 +25,7 @@ class Product:
         # [Задание 4] Делаем цену приватным атрибутом класса
         self.__price: float = price
         self.quantity: int = quantity
+        super().__init__()
 
     def __str__(self) -> str:
         """[Задание 1] Магический метод для строкового отображения продукта."""

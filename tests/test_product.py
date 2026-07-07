@@ -109,3 +109,11 @@ def test_add_products_type_error(sample_product: Product) -> None:
 
     with pytest.raises(TypeError):
         _ = sample_product + phone
+
+
+def test_product_repr(sample_product: Product) -> None:
+    """Тест, что repr продукта формируется корректно через миксин."""
+    repr_str = repr(sample_product)
+    assert "Product" in repr_str
+    assert "Iphone 15" in repr_str
+    assert "210000.0" in repr_str
