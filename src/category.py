@@ -1,24 +1,42 @@
 from typing import List
 
+from src.order import BaseGroup
 from src.product import Product
 
 
-class Category:
-    # Атрибуты класса для подсчета количества категорий и уникальных товаров
+class Category(BaseGroup):
     category_count: int = 0
     product_count: int = 0
 
     def __init__(self, name: str, description: str, products: List[Product]) -> None:
         self.name: str = name
         self.description: str = description
-        self.products: List[Product] = products
+        # [Задание 1] Сделали список товаров приватным атрибутом, чтобы к нему нельзя было получить доступ извне
+        self.__products: List[Product] = products
 
-        # Увеличиваем счетчик категорий при создании нового объекта
         Category.category_count += 1
-        # Увеличиваем счетчик уникальных товаров на количество элементов в переданном списке
         Category.product_count += len(products)
 
+    def __str__(self) -> str:
+        """[Задание 1, продолжение] Магический метод для строкового отображения категории."""
+        total_quantity = 0
+        for product in self.__products:
+            total_quantity += product.quantity
+        return f"{self.name}, количество продуктов: {total_quantity} шт."
+
     def add_product(self, product: Product) -> None:
-        """Метод для добавления товара в категорию."""
-        self.products.append(product)
+        """[Задание 3] Метод для добавления объекта класса Product (или его наследников) в категорию."""
+        # Проверяем, является ли объект экземпляром класса Product или его дочерних классов
+        if not isinstance(product, Product):
+            raise TypeError("Добавлять в категорию можно только продукты или их наследников")
+
+        self.__products.append(product)
         Category.product_count += 1
+
+    @property
+    def products(self) -> str:
+        """[Задание 2] Геттер, который возвращает все товары в виде одной большой строки."""
+        result = ""
+        for product in self.__products:
+            result += f"{str(product)}\n"
+        return result

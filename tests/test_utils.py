@@ -20,8 +20,8 @@ def test_load_data_from_json(tmp_path: Path) -> None:
     # Запускаем функцию
     categories = load_data_from_json(str(file))
 
-    # Проверяем, что объекты создались правильно
     assert len(categories) == 1
     assert categories[0].name == "Продукты"
-    assert len(categories[0].products) == 1
-    assert categories[0].products[0].name == "Хлеб"
+
+    # Проверяем, что строковый геттер содержит наш товар
+    assert "Хлеб, 50.0 руб. Остаток: 10 шт.\n" in categories[0].products
