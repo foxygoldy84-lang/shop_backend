@@ -25,13 +25,35 @@ class Category(BaseGroup):
         return f"{self.name}, количество продуктов: {total_quantity} шт."
 
     def add_product(self, product: Product) -> None:
-        """[Задание 3] Метод для добавления объекта класса Product (или его наследников) в категорию."""
-        # Проверяем, является ли объект экземпляром класса Product или его дочерних классов
-        if not isinstance(product, Product):
-            raise TypeError("Добавлять в категорию можно только продукты или их наследников")
+        """[Дополнительное задание] Добавление товара с логированием через try-else-finally."""
+        try:
+            if not isinstance(product, Product):
+                raise TypeError("Добавлять в категорию можно только продукты или их наследников")
+            # Если у товара количество 0, наше исключение сработает ещё при проверке
+            if product.quantity <= 0:
+                from src.exceptions import ZeroQuantityProductError
 
-        self.__products.append(product)
-        Category.product_count += 1
+                raise ZeroQuantityProductError()
+        except TypeError as e:
+            print(f"Ошибка типа: {e}")
+            raise
+        except ValueError as e:
+            print(f"Ошибка валидации: {e}")
+            raise
+        else:
+            self.__products.append(product)
+            Category.product_count += 1
+            print("Товар добавлен.")
+        finally:
+            print("Обработка добавления товара завершена.")
+
+    def middle_price(self) -> float:
+        """[Задание 2] Метод для подсчета среднего ценника всех товаров в категории."""
+        try:
+            total_price = sum(product.price for product in self.__products)
+            return total_price / len(self.__products)
+        except ZeroDivisionError:
+            return 0.0
 
     @property
     def products(self) -> str:
