@@ -1,6 +1,7 @@
 from abc import ABC, abstractmethod
 from typing import Any, Dict, List, Optional, Union
 
+from src.exceptions import ZeroQuantityProductError
 from src.print_mixin import PrintMixin
 
 
@@ -20,6 +21,8 @@ class Product(PrintMixin, BaseProduct):
     """Базовый класс продукта, включающий логирование через миксин."""
 
     def __init__(self, name: str, description: str, price: float, quantity: int) -> None:
+        if quantity <= 0:
+            raise ZeroQuantityProductError()
         self.name: str = name
         self.description: str = description
         # [Задание 4] Делаем цену приватным атрибутом класса
